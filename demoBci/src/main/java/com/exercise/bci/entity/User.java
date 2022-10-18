@@ -34,14 +34,14 @@ public class User {
     private String token;
     private Boolean isActive;
 
-    public User(String name, String email, String password, List<Phone> userPhones) {
+    public User(String name, String email, String password, List<Phone> userPhones, String token) {
         this.userId = UUID.randomUUID().toString();
         this.name = name;
         this.email = email;
         this.password = password;
         this.isActive = true;
         this.phones = userPhones;
-        this.token = "gfdfd"; //create token jwt
+        this.token = token;
         this.created = LocalDateTime.now();
         this.lastLogin = LocalDateTime.now();
     }

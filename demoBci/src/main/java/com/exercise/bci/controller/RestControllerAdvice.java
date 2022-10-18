@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import static com.exercise.bci.enums.ErrorCode.UNKNOWN_ERROR_CODE;
+
 @ControllerAdvice
 public class RestControllerAdvice extends ResponseEntityExceptionHandler
 {
@@ -29,6 +31,12 @@ public class RestControllerAdvice extends ResponseEntityExceptionHandler
     public ResponseEntity<Object> handleInvalidDataException(final InvalidDataException ex, final WebRequest request) {
         final ErrorResponseDTO bodyOfResponse = new ErrorResponseDTO(ex.getErrorCode(), ex.getMessage());
         return handleExceptionInternal(ex, bodyOfResponse, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
+    }
+
+    @ExceptionHandler( {Exception.class})
+    public ResponseEntity<Object> handleGeneralException(final Exception ex, final WebRequest request) {
+        final ErrorResponseDTO bodyOfResponse = new ErrorResponseDTO(UNKNOWN_ERROR_CODE.getErrorCode(), ex.getMessage());
+        return handleExceptionInternal(ex, bodyOfResponse, new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR, request);
     }
 
 }

@@ -4,15 +4,14 @@ import com.exercise.bci.dto.PhoneDTO;
 import com.exercise.bci.dto.RequestDTO;
 import com.exercise.bci.dto.ResponseDTO;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import com.exercise.bci.entity.Phone;
 import com.exercise.bci.entity.User;
 import com.exercise.bci.exceptions.InvalidDataException;
 import com.exercise.bci.exceptions.UserAlreadyExistsException;
 import com.exercise.bci.repository.UserRepository;
+import com.exercise.bci.security.Token;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +20,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserRepository repository;
+
+    @Autowired
+    private Token jwtToken;
 
     @Override
     public ResponseDTO CreateUser(RequestDTO req) throws InvalidDataException, UserAlreadyExistsException {
@@ -33,7 +35,8 @@ public class UserServiceImpl implements UserService {
             throw new UserAlreadyExistsException("User " + req.getEmail().getValue() + " already exists");
         }
 
-        User user = new User(req.getName(), req.getEmail().getValue(), req.getPassword().getValueEncrypted(), toPhoneEntityList(req.getPhones()));
+        User user = new User(req.getName(), req.getEmail().getValue(), req.getPassword().getValueEncrypted(),
+                toPhoneEntityList(req.getPhones()), toJwtToken(req));
         user.getPhones().forEach(phone -> phone.setUserPhone(user));
         User userSaved = repository.save(user);
 
@@ -59,5 +62,11 @@ public class UserServiceImpl implements UserService {
         res.setIsActive(user.getIsActive());
         res.setToken(user.getToken());
         return res;
+    }
+
+    private String toJwtToken(RequestDTO req) {
+        Map<String, String> jwtClaims = new HashMap<>();
+        jwtClaims.put("email", req.getEmail().getValue());
+        return jwtToken.generate(jwtClaims);
     }
 }
