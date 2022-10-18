@@ -33,7 +33,7 @@ public class UserServiceImpl implements UserService {
             throw new UserAlreadyExistsException("User " + req.getEmail().getValue() + " already exists");
         }
 
-        User user = new User(req.getName(), req.getEmail().getValue(), req.getPassword().getValue(), toPhoneEntityList(req.getPhones()));
+        User user = new User(req.getName(), req.getEmail().getValue(), req.getPassword().getValueEncrypted(), toPhoneEntityList(req.getPhones()));
         user.getPhones().forEach(phone -> phone.setUserPhone(user));
         User userSaved = repository.save(user);
 
