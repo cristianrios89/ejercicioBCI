@@ -1,7 +1,6 @@
-package com.exercise.bci.serializer;
+package com.exercise.bci.serialization;
 
 import com.exercise.bci.dto.PasswordDTO;
-import com.fasterxml.jackson.core.JacksonException;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
@@ -19,9 +18,7 @@ public class CustomPasswordDeserializer extends StdDeserializer<PasswordDTO> {
     }
 
     @Override
-    public PasswordDTO deserialize(JsonParser p, DeserializationContext ctxt) throws IOException, JacksonException {
-        PasswordDTO pw = new PasswordDTO();
-        pw.setPassword(p.getText());
-        return pw;
+    public PasswordDTO deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
+        return new PasswordDTO(p.getText());
     }
 }

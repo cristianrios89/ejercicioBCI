@@ -2,9 +2,11 @@ package com.exercise.bci.dto;
 
 import com.exercise.bci.validator.PatternValidator;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
+@AllArgsConstructor
 public class EmailDTO extends PatternValidator {
 
     private String email;

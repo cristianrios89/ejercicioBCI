@@ -1,11 +1,13 @@
 package com.exercise.bci.service;
 
-import com.exercise.bci.dto.RequestDTO;
-import com.exercise.bci.dto.ResponseDTO;
-import com.exercise.bci.exceptions.InvalidDataException;
-import com.exercise.bci.exceptions.UserAlreadyExistsException;
+import com.exercise.bci.dto.LoginResponseDTO;
+import com.exercise.bci.dto.UserDataDTO;
+import com.exercise.bci.dto.UserMetadataDTO;
+import com.exercise.bci.exceptions.*;
 
 public interface UserService {
 
-    ResponseDTO CreateUser(RequestDTO req) throws InvalidDataException, UserAlreadyExistsException;
+    UserMetadataDTO createUser(UserDataDTO req) throws InvalidDataException, UserAlreadyExistsException, UnexpectedException;
+    String getUsernameFrom(String authHeader) throws InvalidAuthenticationCredentialsException;
+    LoginResponseDTO getUserInfo(String username) throws UserNotFoundException, UnexpectedException;
 }

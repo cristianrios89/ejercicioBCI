@@ -1,11 +1,13 @@
 package com.exercise.bci.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import java.time.LocalDateTime;
 
 @Data
-public class ResponseDTO {
+@AllArgsConstructor
+public class UserMetadataDTO {
     private String id;
     private LocalDateTime created;
     private LocalDateTime lastLogin;

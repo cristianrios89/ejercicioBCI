@@ -1,8 +1,10 @@
 package com.exercise.bci.security;
 
-import java.util.Map;
+import com.exercise.bci.exceptions.InvalidAuthenticationCredentialsException;
+import com.exercise.bci.exceptions.UnexpectedException;
+import io.jsonwebtoken.Claims;
 
 public interface Token {
-    String generate(Map<String, String> claims);
-    Boolean isValid();
+    String generate(String subject) throws UnexpectedException;
+    Claims getClaimsFromToken(String token) throws InvalidAuthenticationCredentialsException;
 }

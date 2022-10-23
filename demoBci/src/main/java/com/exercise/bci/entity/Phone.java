@@ -1,5 +1,6 @@
 package com.exercise.bci.entity;
 
+import com.exercise.bci.dto.PhoneDTO;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -26,5 +27,9 @@ public class Phone {
         this.setNumber(number);
         this.setCityCode(cityCode);
         this.setCountryCode(countryCode);
+    }
+
+    public static Phone convertFrom(PhoneDTO p) {
+        return new Phone(p.getNumber(), p.getCityCode(), p.getCountryCode());
     }
 }
