@@ -11,12 +11,16 @@ import com.exercise.bci.entity.User;
 import com.exercise.bci.exceptions.*;
 import com.exercise.bci.repository.UserRepository;
 import com.exercise.bci.security.Token;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import static com.exercise.bci.enums.Constants.BEARER_PREFIX;
 
 @Service
+@AllArgsConstructor
+@NoArgsConstructor
 public class UserServiceImpl implements UserService {
     @Autowired
     private UserRepository repository;
@@ -66,9 +70,8 @@ public class UserServiceImpl implements UserService {
         if (authHeader != null && authHeader.startsWith(prefix)) {
             String token = authHeader.replace(prefix, "");
             return jwtToken.getClaimsFromToken(token).getSubject();
-        } else {
-            throw new InvalidAuthenticationCredentialsException("Invalid or missing authentication header");
         }
+        throw new InvalidAuthenticationCredentialsException("Invalid or missing authentication header");
     }
 
     @Override

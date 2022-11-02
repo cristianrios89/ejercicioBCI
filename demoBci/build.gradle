@@ -2,6 +2,7 @@ plugins {
 	id 'org.springframework.boot' version '2.7.4'
 	id 'io.spring.dependency-management' version '1.0.14.RELEASE'
 	id 'java'
+	id 'groovy'
 }
 
 group = 'com.exercise.bci'
@@ -11,6 +12,9 @@ sourceCompatibility = '1.8'
 configurations {
 	compileOnly {
 		extendsFrom annotationProcessor
+	}
+	testImplementation {
+		extendsFrom compileOnly
 	}
 }
 
@@ -28,6 +32,8 @@ dependencies {
 	compileOnly 'io.jsonwebtoken:jjwt-api:0.11.5'
 	runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.5'
 	runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.11.5'
+	testImplementation 'org.codehaus.groovy:groovy-all:3.0.13'
+	testImplementation 'org.spockframework:spock-core:2.2-M3-groovy-3.0'
 }
 
 tasks.named('test') {
